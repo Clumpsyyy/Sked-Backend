@@ -1,2 +1,2 @@
 # SKED
-SKED - CRUD a Scheduler App using React Native 
+SKED - a Scheduler App using React Native 

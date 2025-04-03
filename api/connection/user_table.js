@@ -20,19 +20,19 @@ async function getUser(User_ID) {
     return result[0];
 }
 
-async function createUser(User_ID, Email, Password, Authentication_status, Avatar, Ingame_name, in_game_currency, owned_item, OTP_Verification_Status, Created_At) {
+async function createUser(User_ID, Email, Fullname, Password, Created_At) {
     const [result] = await pool.query(
-        'INSERT INTO users (User_ID, Email, Password, Authentication_status, Avatar, Ingame_name, in_game_currency, owned_item, OTP_Verification_Status, Created_At) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-        [User_ID, Email, Password, Authentication_status, Avatar, Ingame_name, in_game_currency, owned_item, OTP_Verification_Status, Created_At]
+        'INSERT INTO users (User_ID, Email, Fullname, Password, Created_At) VALUES (?, ?, ?, ?, ?)',
+        [User_ID, Email, Fullname, Password, Created_At]
     );
     const id = result.insertId;
     return getUser(id);
 }
 
-async function updateUser(User_ID, Email, Password, Authentication_status, Avatar, Ingame_name, in_game_currency, owned_item, OTP_Verification_Status,) {
+async function updateUser(User_ID, Email, Fullname, Password ) {
     const [result] = await pool.query(
-        'UPDATE users SET Email = ?, Password = ?, Authentication_status = ?, Avatar = ?, Ingame_name = ?, in_game_currency = ?, owned_item = ?, OTP_Verification_Status = ? WHERE User_ID = ?',
-        [Email, Password, Authentication_status, Avatar, Ingame_name, in_game_currency, owned_item, OTP_Verification_Status, User_ID]
+        'UPDATE users SET Email = ?, Fullname = ?, Password = ? WHERE User_ID = ?',
+        [Email, Fullname, Password, User_ID]
     );
     return getUser(User_ID);
 }

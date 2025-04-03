@@ -1,9 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const pool = require('./api/database_connection/pool');
+const pool = require('./api/connection/pool');
 const verifyToken = require('./api/middleware/authMiddleware');
-
 const dotenv = require('dotenv');
 
 dotenv.config();

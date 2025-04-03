@@ -1,4 +1,4 @@
-const { getUsers, getUser, createUser, updateUser, deleteUser, getUserByEmail} = require('../database_connection/user_table.js');
+const { getUsers, getUser, createUser, updateUser, deleteUser, getUserByEmail} = require('../connection/user_table.js');
 
 const express = require('express');
 const jwt = require('jsonwebtoken');
@@ -31,12 +31,12 @@ router.get('/:id', verifyToken, async (req, res) => {
 // CREATE A NEW USER
 router.post('/', async (req, res) => { 
     try {
-        const { User_ID, Email, Password, Authentication_status, Avatar, Ingame_name, in_game_currency, owned_item, OTP_Verification_Status, Created_At } = req.body;
+        const { User_ID, Email, Fullname, Password, Created_At } = req.body;
         const existingUser = await getUserByEmail(Email);
         if (existingUser) {
             return res.status(400).send({ error: 'Email is already in use' });
         }
-        const user = await createUser(User_ID, Email, Password, Authentication_status, Avatar, Ingame_name, in_game_currency, owned_item, OTP_Verification_Status, Created_At);
+        const user = await createUser(User_ID, Email, Fullname, Password, Created_At );
         res.send(user);
     } catch (error) {
         console.error(error);
@@ -47,13 +47,13 @@ router.post('/', async (req, res) => {
 // UPDATE A USER
 router.put('/:id', verifyToken, async (req, res) => { 
     const id = req.params.id;
-    const { Email, Password, Authentication_status, Avatar, Ingame_name, in_game_currency, owned_item, OTP_Verification_Status } = req.body;
+    const { Email, Fullname, Password } = req.body;
 
     console.log("Received ID:", id);
     console.log("Received Data:", req.body);
 
        try {
-        const user = await updateUser(id, Email, Password, Authentication_status, Avatar, Ingame_name, in_game_currency, owned_item, OTP_Verification_Status);
+        const user = await updateUser(id, Email, Fullname, Password);
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }

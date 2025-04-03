@@ -1,2 +1,2 @@
-# iNote
-iNote - CRUD To-Do List App using React Native 
+# SKED
+SKED - CRUD a Scheduler App using React Native 
